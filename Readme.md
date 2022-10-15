@@ -8,7 +8,7 @@ This project aim to predict the PJI infection by given dataset. I have tried man
 
 ## Data
 
-The dataset is provided by Professor Yuh-Jyh Hu at Institute of Bioinformatics at National Yang Ming Chiao Tung University. The data is the real patients information collected from hosipital. This dataset is originally used for doctors to diagnosis whether the patient will get PJI or not. The dataset that used for PJI diagnosis contain 52159 samples, 67 features and 1 label. For more inofotmation about dataset, please see **Report.pdf**.
+The dataset is provided by Professor Yuh-Jyh Hu at Institute of Bioinformatics at National Yang Ming Chiao Tung University. The data is the real patients information collected from hosipital. This dataset is originally used for doctors to diagnosis whether the patient will get PJI or not. The dataset that used for PJI diagnosis contain 52159 samples, 67 features and 1 label. For more inofotmation about dataset, please see **Report.html**.
 > The dataset is not public. If you want to access the whole dataset, please contact me at liabo3128.cs08@nycu.edu.tw or Professor Yuh-Jyu Hu at  yhu@cs.nycu.edu.tw
 
 ## Data Preprocessing
@@ -19,7 +19,7 @@ In order to get better performance, I have apply the following data preprocessin
 - Missing Value Imputation
 - Scaler
 - One hot Encoding
-For more inofotmation about dataset, please see **Report.pdf**.
+For more inofotmation about dataset, please see **Report.html**.
 
 ## Model
 In this project, I have tried the following machine learning models and copare the result.
@@ -30,7 +30,7 @@ In this project, I have tried the following machine learning models and copare t
 - Decision Tree(DT)
 - Random Forest(RF)
 Since the target dataset is extremely imbalanced, most of the model’s class weight are tuned as {0:0.1,1:1}.
-For more inofotmation about dataset, please see **Report.pdf**.
+For more inofotmation about dataset, please see **Report.html**.
 
 ## Results
 Since the label in the original dataset is extremely imbalanced, accuracy in this case would not be a good way to estimate the model. Therefore, I used the addtional criteria below to compare the performance of each model.
