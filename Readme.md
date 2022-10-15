@@ -29,6 +29,7 @@ In this project, I have tried the following machine learning models and copare t
 - Support Vector Machine(SVM)
 - Decision Tree(DT)
 - Random Forest(RF)
+
 Since the target dataset is extremely imbalanced, most of the model’s class weight are tuned as {0:0.1,1:1}.
 For more inofotmation about dataset, please see **Report.html**.
 
