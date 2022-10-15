@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        Periprosthetic joint infection diagnosis by multiple machine learning model - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{background:#fff;color:#333;display:block;overflow-x:auto;padding:.5em}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{background-color:#eaffea;color:#55a532}.hljs-deletion{background-color:#ffecec;color:#bd2c00}.hljs-link{text-decoration:underline}.markdown-body{word-wrap:break-word;font-size:16px;line-height:1.5}.markdown-body:after,.markdown-body:before{content:"";display:table}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;line-height:1;margin-left:-20px;padding-right:4px}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-bottom:16px;margin-top:0}.markdown-body hr{background-color:#e7e7e7;border:0;height:.25em;margin:24px 0;padding:0}.markdown-body blockquote{border-left:.25em solid #ddd;color:#777;font-size:16px;padding:0 1em}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{background-color:#fcfcfc;border:1px solid;border-color:#ccc #ccc #bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb;color:#555;display:inline-block;font-size:11px;line-height:10px;padding:3px 5px;vertical-align:middle}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{font-weight:600;line-height:1.25;margin-bottom:16px;margin-top:24px}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{border-bottom:1px solid #eee;padding-bottom:.3em}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{color:#777;font-size:.85em}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{list-style-type:none;padding:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-bottom:0;margin-top:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{font-size:1em;font-style:italic;font-weight:700;margin-top:16px;padding:0}.markdown-body dl dd{margin-bottom:16px;padding:0 16px}.markdown-body table{display:block;overflow:auto;width:100%;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{border:1px solid #ddd;padding:6px 13px}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{background-color:#fff;box-sizing:initial;max-width:100%}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{background-color:initial;max-width:none;vertical-align:text-top}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{border:1px solid #ddd;display:block;float:left;margin:13px 0 0;overflow:hidden;padding:7px;width:auto}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{clear:both;color:#333;display:block;padding:5px 0 0}.markdown-body span.align-center{clear:both;display:block;overflow:hidden}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{clear:both;display:block;overflow:hidden}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{background-color:#0000000a;border-radius:3px;font-size:85%;margin:0;padding:.2em 0}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{content:"\00a0";letter-spacing:-.2em}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{background:#0000;border:0;font-size:100%;margin:0;padding:0;white-space:pre;word-break:normal}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{background-color:#f7f7f7;border-radius:3px;font-size:85%;line-height:1.45;overflow:auto;padding:16px}.markdown-body pre code,.markdown-body pre tt{word-wrap:normal;background-color:initial;border:0;display:inline;line-height:inherit;margin:0;max-width:auto;overflow:visible;padding:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{font-size:12px;line-height:1;overflow:hidden;padding:5px;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{background:#fff;border:0;padding:10px 8px 9px;text-align:right}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{background:#f8f8f8;border-top:0;font-weight:700}.news .alert .markdown-body blockquote{border:0;padding:0 0 0 40px}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{cursor:default!important;float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle}.markdown-body{max-width:758px;overflow:visible!important;padding-bottom:40px;padding-top:40px;position:relative}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{border-right:3px solid #6ce26c!important;box-sizing:initial;color:#afafaf!important;cursor:default;display:inline-block;min-width:20px;padding:0 8px 0 0;position:relative;text-align:right;z-index:4}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-bottom:none;border-left:none;border-top:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-collapse:inherit!important;border-spacing:0}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{margin-bottom:unset;overflow:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p:last-child{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{background-color:inherit;border-radius:0;overflow:visible;text-align:center;white-space:inherit}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{height:100%;max-width:100%}.markdown-body pre>code.wrap{word-wrap:break-word;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap}.markdown-body .alert>p:last-child,.markdown-body .alert>ul:last-child{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{background-color:#000;background-position:50%;background-repeat:no-repeat;background-size:contain;cursor:pointer;display:table;overflow:hidden;text-align:center}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{object-fit:contain;width:100%;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{height:100%;left:0;position:absolute;top:0;width:100%}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{color:#fff;height:auto;left:50%;opacity:.3;position:absolute;top:50%;transform:translate(-50%,-50%);transition:opacity .2s;width:auto;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%}.figma{display:table;padding-bottom:56.25%;position:relative;width:100%}.figma iframe{border:1px solid #eee;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%}.markmap-container{height:300px}.markmap-container>svg{height:100%;width:100%}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{color:#777;margin:25px auto -25px;max-width:760px;position:relative;z-index:2}.toc .invisable-node{list-style-type:none}.ui-toc{bottom:20px;position:fixed;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{border-bottom-left-radius:0;border-top-left-radius:0;height:40px;padding:10px 4px}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{color:#fff;opacity:1;transition:opacity .2s}.ui-toc-label:focus{background-color:#ccc;color:#000;opacity:.3}.ui-toc-label:hover{background-color:#ccc;opacity:1;transition:opacity .2s}.ui-toc-dropdown{margin-bottom:20px;margin-top:20px;max-height:70vh;max-width:45vw;overflow:auto;padding-left:10px;padding-right:10px;text-align:inherit;width:25vw}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{letter-spacing:.0029em;padding-right:0}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{color:#767676;display:block;font-size:13px;font-weight:500;padding:4px 20px}.ui-toc-dropdown .nav>li:first-child:last-child>ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{background-color:initial;border-left:1px solid #000;color:#000;padding-left:19px;text-decoration:none}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{border-left:none;border-right:1px solid #000;padding-right:19px}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{background-color:initial;border-left:2px solid #000;color:#000;font-weight:700;padding-left:18px}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{border-left:none;border-right:2px solid #000;padding-right:18px}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{font-size:12px;font-weight:400;padding-bottom:1px;padding-left:30px;padding-top:1px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{font-size:12px;font-weight:400;padding-bottom:1px;padding-left:40px;padding-top:1px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{font-weight:500;padding-left:28px}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{font-weight:500;padding-left:38px}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{max-height:70vh;max-width:15vw;overflow:auto;position:fixed;top:0}.back-to-top,.expand-toggle,.go-to-bottom{color:#999;display:block;font-size:12px;font-weight:500;margin-left:10px;margin-top:10px;padding:4px 10px}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{background-position:50%;background-repeat:no-repeat;background-size:cover;border-radius:50%;display:block;height:20px;margin-bottom:2px;margin-right:5px;margin-top:2px;width:20px}.ui-user-icon.small{display:inline-block;height:18px;margin:0 0 .2em;vertical-align:middle;width:18px}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;padding-left:22px;text-decoration:none}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}.inline-spoiler-section{cursor:pointer}.inline-spoiler-section .spoiler-text{background-color:#333;border-radius:2px}.inline-spoiler-section .spoiler-text>*{opacity:0}.inline-spoiler-section .spoiler-img{filter:blur(10px)}.inline-spoiler-section.raw{background-color:#333;border-radius:2px}.inline-spoiler-section.raw>*{opacity:0}.inline-spoiler-section.unveil{cursor:auto}.inline-spoiler-section.unveil .spoiler-text{background-color:#3333331a}.inline-spoiler-section.unveil .spoiler-text>*{opacity:1}.inline-spoiler-section.unveil .spoiler-img{filter:none}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{color:#222;position:relative;z-index:1}.markdown-body.slides:before{background-color:currentColor;bottom:0;box-shadow:0 0 0 50vw;content:"";display:block;left:0;position:absolute;right:0;top:0;z-index:-1}.markdown-body.slides section[data-markdown]{background-color:#fff;margin-bottom:1.5em;position:relative;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{left:1em;max-height:100%;overflow:hidden;position:absolute;right:1em;top:50%;transform:translateY(-50%)}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{border:3px solid #777;content:"";height:1.5em;position:absolute;right:1em;top:-1.5em}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;-webkit-overflow-scrolling:touch;font-family:Source Sans Pro,Helvetica,Arial,sans-serif;letter-spacing:.025em}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}svg{text-shadow:none}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="false"><h6 id="tags-Github" data-id="tags-Github"><a class="anchor hidden-xs" href="#tags-Github" title="tags-Github"><span class="octicon octicon-link"></span></a><span>tags: </span><code>Github</code></h6><h1 id="Periprosthetic-joint-infection-diagnosis-by-multiple-machine-learning-model" data-id="Periprosthetic-joint-infection-diagnosis-by-multiple-machine-learning-model"><a class="anchor hidden-xs" href="#Periprosthetic-joint-infection-diagnosis-by-multiple-machine-learning-model" title="Periprosthetic-joint-infection-diagnosis-by-multiple-machine-learning-model"><span class="octicon octicon-link"></span></a><span>Periprosthetic joint infection diagnosis by multiple machine learning model</span></h1><ul>
+<li><span>Author: Li-Chun Huang</span></li>
+<li><span>Institute: Department of Computer Science at National Yang Ming Chiao Tung University</span></li>
+<li><span>Email: </span><a href="mailto:libao3128.cs08@nycu.edu.tw" target="_blank" rel="noopener"><span>libao3128.cs08@nycu.edu.tw</span></a></li>
+</ul><h2 id="Introduction" data-id="Introduction"><a class="anchor hidden-xs" href="#Introduction" title="Introduction"><span class="octicon octicon-link"></span></a><span>Introduction</span></h2><p><span>Total knee/hip joint replacement (total knee/hip arthroplasty) is performed to restore function and relieve pain in patients with severely damaged knees. The surgery involves replacement of both the medial and lateral femorotibial joints and the patellofemoral joint. Although total joint replacement is an effective treatment, postoperative complications include blood clots, infection, and loosening or malalignment of the prosthetic component. Periprosthetic joint infection (PJI) is a serious complication occurring in 1% to 2% of primary arthroplasties, which is associated with high morbidity and need for complex interdisciplinary treatment strategies.</span></p><h2 id="Data-Collection" data-id="Data-Collection"><a class="anchor hidden-xs" href="#Data-Collection" title="Data-Collection"><span class="octicon octicon-link"></span></a><span>Data Collection</span></h2><h3 id="Dataset" data-id="Dataset"><a class="anchor hidden-xs" href="#Dataset" title="Dataset"><span class="octicon octicon-link"></span></a><span>Dataset</span></h3><p><span>The dataset is provided by professor Yuh-Jyh Hu, which is the real patients information collected from hosipital. This dataset is originally used for doctors to diagnosis whether the patient will get PJI or not. The dataset that used for PJI diagnosis contain 52159 samples, 67 features and 1 label.</span></p><h4 id="Numeric-features" data-id="Numeric-features"><a class="anchor hidden-xs" href="#Numeric-features" title="Numeric-features"><span class="octicon octicon-link"></span></a><span>Numeric features</span></h4><p><span>There are 24 numerical features:</span></p><table>
+<thead>
+<tr>
+<th></th>
+<th><span>count</span></th>
+<th><span>mean</span></th>
+<th><span>std</span></th>
+<th><span>min</span></th>
+<th><span>25%</span></th>
+<th><span>50%</span></th>
+<th><span>75%</span></th>
+<th><span>max</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>AGE</span></td>
+<td><span>52065</span></td>
+<td><span>65.30</span></td>
+<td><span>12.21468509</span></td>
+<td><span>12</span></td>
+<td><span>59</span></td>
+<td><span>68</span></td>
+<td><span>74</span></td>
+<td><span>99</span></td>
+</tr>
+<tr>
+<td><span>LOS</span></td>
+<td><span>52065</span></td>
+<td><span>5.62</span></td>
+<td><span>2.891652923</span></td>
+<td><span>1</span></td>
+<td><span>4</span></td>
+<td><span>5</span></td>
+<td><span>7</span></td>
+<td><span>72</span></td>
+</tr>
+<tr>
+<td><span>cci_index</span></td>
+<td><span>52159</span></td>
+<td><span>0.70</span></td>
+<td><span>1.345235668</span></td>
+<td><span>0</span></td>
+<td><span>0</span></td>
+<td><span>0</span></td>
+<td><span>1</span></td>
+<td><span>15</span></td>
+</tr>
+<tr>
+<td><span>elx_index</span></td>
+<td><span>52159</span></td>
+<td><span>0.94</span></td>
+<td><span>1.429831482</span></td>
+<td><span>0</span></td>
+<td><span>0</span></td>
+<td><span>0</span></td>
+<td><span>2</span></td>
+<td><span>13</span></td>
+</tr>
+<tr>
+<td><span>OP_time_minute</span></td>
+<td><span>32053</span></td>
+<td><span>127.53</span></td>
+<td><span>40.95983453</span></td>
+<td><span>2</span></td>
+<td><span>99</span></td>
+<td><span>124</span></td>
+<td><span>151</span></td>
+<td><span>1539</span></td>
+</tr>
+<tr>
+<td><span>OP_time_hour</span></td>
+<td><span>32053</span></td>
+<td><span>2.13</span></td>
+<td><span>0.682663909</span></td>
+<td><span>0.033</span></td>
+<td><span>1.65</span></td>
+<td><span>2.06</span></td>
+<td><span>2.52</span></td>
+<td><span>25.65</span></td>
+</tr>
+<tr>
+<td><span>CBC_WBC</span></td>
+<td><span>16408</span></td>
+<td><span>8.23</span></td>
+<td><span>2.405580859</span></td>
+<td><span>2.17</span></td>
+<td><span>6.87</span></td>
+<td><span>7.97</span></td>
+<td><span>9.27</span></td>
+<td><span>178.77</span></td>
+</tr>
+<tr>
+<td><span>CBC_RBC</span></td>
+<td><span>16380</span></td>
+<td><span>5.66</span></td>
+<td><span>0.544212281</span></td>
+<td><span>3.06</span></td>
+<td><span>5.32</span></td>
+<td><span>5.63</span></td>
+<td><span>5.96</span></td>
+<td><span>9.25</span></td>
+</tr>
+<tr>
+<td><span>CBC_HG</span></td>
+<td><span>24734</span></td>
+<td><span>13.69</span></td>
+<td><span>1.81927182</span></td>
+<td><span>1.19</span></td>
+<td><span>12.49</span></td>
+<td><span>13.79</span></td>
+<td><span>14.89</span></td>
+<td><span>20.59</span></td>
+</tr>
+<tr>
+<td><span>CBC_HT</span></td>
+<td><span>24617</span></td>
+<td><span>38.87</span></td>
+<td><span>5.162323155</span></td>
+<td><span>19.8</span></td>
+<td><span>35.4</span></td>
+<td><span>39.3</span></td>
+<td><span>42.4</span></td>
+<td><span>57</span></td>
+</tr>
+<tr>
+<td><span>CBC_MCV</span></td>
+<td><span>16359</span></td>
+<td><span>90.65</span></td>
+<td><span>7.014656534</span></td>
+<td><span>48.11</span></td>
+<td><span>88.61</span></td>
+<td><span>91.61</span></td>
+<td><span>94.51</span></td>
+<td><span>124.11</span></td>
+</tr>
+<tr>
+<td><span>CBC_MCH</span></td>
+<td><span>16372</span></td>
+<td><span>30.86</span></td>
+<td><span>2.743574057</span></td>
+<td><span>12.42</span></td>
+<td><span>30.12</span></td>
+<td><span>31.22</span></td>
+<td><span>32.32</span></td>
+<td><span>42.72</span></td>
+</tr>
+<tr>
+<td><span>CBC_MCHC</span></td>
+<td><span>16369</span></td>
+<td><span>34.34</span></td>
+<td><span>1.09398587</span></td>
+<td><span>25.13</span></td>
+<td><span>33.73</span></td>
+<td><span>34.43</span></td>
+<td><span>35.03</span></td>
+<td><span>40.23</span></td>
+</tr>
+<tr>
+<td><span>CBC_RDW</span></td>
+<td><span>16364</span></td>
+<td><span>21.28</span></td>
+<td><span>12.65069413</span></td>
+<td><span>12.34</span></td>
+<td><span>14.04</span></td>
+<td><span>14.74</span></td>
+<td><span>17.24</span></td>
+<td><span>67.94</span></td>
+</tr>
+<tr>
+<td><span>CBC_Platelet</span></td>
+<td><span>16554</span></td>
+<td><span>241.18</span></td>
+<td><span>68.9582125</span></td>
+<td><span>16.1</span></td>
+<td><span>199</span></td>
+<td><span>236</span></td>
+<td><span>278</span></td>
+<td><span>992</span></td>
+</tr>
+<tr>
+<td><span>CBC_RDWCV</span></td>
+<td><span>3595</span></td>
+<td><span>14.69</span></td>
+<td><span>1.19811009</span></td>
+<td><span>12.5</span></td>
+<td><span>13.96</span></td>
+<td><span>14.46</span></td>
+<td><span>15.06</span></td>
+<td><span>26.76</span></td>
+</tr>
+<tr>
+<td><span>BUN</span></td>
+<td><span>24102</span></td>
+<td><span>18.61</span></td>
+<td><span>7.466865722</span></td>
+<td><span>1.8</span></td>
+<td><span>14.27</span></td>
+<td><span>17.27</span></td>
+<td><span>21.27</span></td>
+<td><span>140.67</span></td>
+</tr>
+<tr>
+<td><span>Crea</span></td>
+<td><span>22129</span></td>
+<td><span>1.76</span></td>
+<td><span>0.85886537</span></td>
+<td><span>0.28</span></td>
+<td><span>1.03</span></td>
+<td><span>1.94</span></td>
+<td><span>2.18</span></td>
+<td><span>16.49</span></td>
+</tr>
+<tr>
+<td><span>GOT</span></td>
+<td><span>22877</span></td>
+<td><span>30.13</span></td>
+<td><span>104.8828898</span></td>
+<td><span>4</span></td>
+<td><span>21</span></td>
+<td><span>25</span></td>
+<td><span>31</span></td>
+<td><span>15643</span></td>
+</tr>
+<tr>
+<td><span>GPT</span></td>
+<td><span>17847</span></td>
+<td><span>27.04</span></td>
+<td><span>22.37383329</span></td>
+<td><span>2</span></td>
+<td><span>16</span></td>
+<td><span>21</span></td>
+<td><span>30</span></td>
+<td><span>506</span></td>
+</tr>
+<tr>
+<td><span>ALB</span></td>
+<td><span>15268</span></td>
+<td><span>5.02</span></td>
+<td><span>0.768206036</span></td>
+<td><span>2</span></td>
+<td><span>4.35</span></td>
+<td><span>5.21</span></td>
+<td><span>5.71</span></td>
+<td><span>7.01</span></td>
+</tr>
+<tr>
+<td><span>Na</span></td>
+<td><span>15894</span></td>
+<td><span>141.86</span></td>
+<td><span>3.176008423</span></td>
+<td><span>22.1</span></td>
+<td><span>140.32</span></td>
+<td><span>142.32</span></td>
+<td><span>143.32</span></td>
+<td><span>169.32</span></td>
+</tr>
+<tr>
+<td><span>K</span></td>
+<td><span>16166</span></td>
+<td><span>4.97</span></td>
+<td><span>0.742037829</span></td>
+<td><span>2.3</span></td>
+<td><span>4.3</span></td>
+<td><span>5.16</span></td>
+<td><span>5.53</span></td>
+<td><span>8.13</span></td>
+</tr>
+<tr>
+<td><span>UA</span></td>
+<td><span>12717</span></td>
+<td><span>6.76</span></td>
+<td><span>1.815913144</span></td>
+<td><span>1.1</span></td>
+<td><span>5.54</span></td>
+<td><span>6.64</span></td>
+<td><span>7.84</span></td>
+<td><span>18.74</span></td>
+</tr>
+</tbody>
+</table><p><span>And the distribution looks like:</span>
+<img src="https://i.imgur.com/P1RbNkv.png" alt="" loading="lazy"></p><h4 id="Categoric-features" data-id="Categoric-features"><a class="anchor hidden-xs" href="#Categoric-features" title="Categoric-features"><span class="octicon octicon-link"></span></a><span>Categoric features</span></h4><p><span>There are 43 categoric features:</span></p><table>
+<thead>
+<tr>
+<th></th>
+<th><span>count</span></th>
+<th><span>unique</span></th>
+<th><span>top</span></th>
+<th><span>freq</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>SEX</span></td>
+<td><span>52065</span></td>
+<td><span>2</span></td>
+<td><span>F</span></td>
+<td><span>34786</span></td>
+</tr>
+<tr>
+<td><span>Joint</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>TKA</span></td>
+<td><span>35013</span></td>
+</tr>
+<tr>
+<td><span>Drain</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>1</span></td>
+<td><span>38550</span></td>
+</tr>
+<tr>
+<td><span>Cemented</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>1</span></td>
+<td><span>35026</span></td>
+</tr>
+<tr>
+<td><span>Commercial_ALBC</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>47355</span></td>
+</tr>
+<tr>
+<td><span>Non_commercial_ALBC</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>1</span></td>
+<td><span>30418</span></td>
+</tr>
+<tr>
+<td><span>Blood_trans</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>44782</span></td>
+</tr>
+<tr>
+<td><span>ASA</span></td>
+<td><span>32001</span></td>
+<td><span>4</span></td>
+<td><span>2</span></td>
+<td><span>17174</span></td>
+</tr>
+<tr>
+<td><span>Diagnosis</span></td>
+<td><span>52159</span></td>
+<td><span>6</span></td>
+<td><span>0</span></td>
+<td><span>40786</span></td>
+</tr>
+<tr>
+<td><span>Congestive Heart Failure</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>50913</span></td>
+</tr>
+<tr>
+<td><span>Cardiac Arrhythmia</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>50298</span></td>
+</tr>
+<tr>
+<td><span>Valvular Disease</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51018</span></td>
+</tr>
+<tr>
+<td><span>Heart disease</span></td>
+<td><span>52159</span></td>
+<td><span>4</span></td>
+<td><span>0</span></td>
+<td><span>48677</span></td>
+</tr>
+<tr>
+<td><span>Pulmonary Circulation Disorders</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>52022</span></td>
+</tr>
+<tr>
+<td><span>Peripheral Vascular Disorders</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51828</span></td>
+</tr>
+<tr>
+<td><span>Hypertension Uncomplicated</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>37819</span></td>
+</tr>
+<tr>
+<td><span>Paralysis</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>52025</span></td>
+</tr>
+<tr>
+<td><span>Other Neurological Disorders</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51414</span></td>
+</tr>
+<tr>
+<td><span>Chronic Pulmonary Disease</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>49183</span></td>
+</tr>
+<tr>
+<td><span>Lung disease</span></td>
+<td><span>52159</span></td>
+<td><span>3</span></td>
+<td><span>0</span></td>
+<td><span>49146</span></td>
+</tr>
+<tr>
+<td><span>Diabetes</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>45948</span></td>
+</tr>
+<tr>
+<td><span>Hypothyroidism</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51595</span></td>
+</tr>
+<tr>
+<td><span>Renal Failure</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>50676</span></td>
+</tr>
+<tr>
+<td><span>Liver Disease</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>48692</span></td>
+</tr>
+<tr>
+<td><span>Peptic Ulcer Disease excluding bleeding</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>49244</span></td>
+</tr>
+<tr>
+<td><span>AIDS/HIV</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>52138</span></td>
+</tr>
+<tr>
+<td><span>Lymphoma</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>52065</span></td>
+</tr>
+<tr>
+<td><span>Metastatic Cancer</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51970</span></td>
+</tr>
+<tr>
+<td><span>Solid Tumor without Metastasis</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>50089</span></td>
+</tr>
+<tr>
+<td><span>Cancer history</span></td>
+<td><span>52159</span></td>
+<td><span>4</span></td>
+<td><span>0</span></td>
+<td><span>50001</span></td>
+</tr>
+<tr>
+<td><span>Rheumatoid Arthritis/collagen</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>49890</span></td>
+</tr>
+<tr>
+<td><span>Coagulopathy</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51802</span></td>
+</tr>
+<tr>
+<td><span>Obesity</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51542</span></td>
+</tr>
+<tr>
+<td><span>Weight Loss</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>52058</span></td>
+</tr>
+<tr>
+<td><span>Fluid and Electrolyte Disorders</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51352</span></td>
+</tr>
+<tr>
+<td><span>Blood Loss Anemia</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51963</span></td>
+</tr>
+<tr>
+<td><span>Deficiency Anemia</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51686</span></td>
+</tr>
+<tr>
+<td><span>Anemia</span></td>
+<td><span>52159</span></td>
+<td><span>3</span></td>
+<td><span>0</span></td>
+<td><span>51510</span></td>
+</tr>
+<tr>
+<td><span>Alcohol Abuse</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51541</span></td>
+</tr>
+<tr>
+<td><span>Drug Abuse</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>52099</span></td>
+</tr>
+<tr>
+<td><span>Psychoses</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51999</span></td>
+</tr>
+<tr>
+<td><span>Depression</span></td>
+<td><span>52159</span></td>
+<td><span>2</span></td>
+<td><span>0</span></td>
+<td><span>51215</span></td>
+</tr>
+<tr>
+<td><span>Psyciatric disorder</span></td>
+<td><span>52159</span></td>
+<td><span>3</span></td>
+<td><span>0</span></td>
+<td><span>51114</span></td>
+</tr>
+</tbody>
+</table><p><span>The distribution looks like:</span>
+<img src="https://i.imgur.com/xpQE4ky.png" alt="" loading="lazy"></p><p><span>The distribution of label is:</span></p><table>
+<thead>
+<tr>
+<th><span>Infected</span></th>
+<th><span>Non-Infected</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>879</span></td>
+<td><span>51280</span></td>
+</tr>
+</tbody>
+</table><p><span>The minority of dataset takes only </span><strong><span>1.6%</span></strong><span>.</span></p><h2 id="Objective" data-id="Objective"><a class="anchor hidden-xs" href="#Objective" title="Objective"><span class="octicon octicon-link"></span></a><span>Objective</span></h2><p><span>This project aim to predict the PJI infection by given dataset. I have tried many differnet models to compare the performance of each. Besides,  Also, since the data is used for medical application, it is important for us to make the model comprehensible.</span></p><h2 id="Preprocessing" data-id="Preprocessing"><a class="anchor hidden-xs" href="#Preprocessing" title="Preprocessing"><span class="octicon octicon-link"></span></a><span>Preprocessing</span></h2><h3 id="Remove-low-quality-samples" data-id="Remove-low-quality-samples"><a class="anchor hidden-xs" href="#Remove-low-quality-samples" title="Remove-low-quality-samples"><span class="octicon octicon-link"></span></a><span>Remove low quality samples</span></h3><p><span>Low quality samples that contain too many missing values will effect models’ performance. Therefore, I drop the samples that contain more than </span><strong><span>25%</span></strong><span> features missing. However, because the labels in dataset is extremely imbalanced, if I simply drop the sample containing too much missing features, the </span><strong><span>Infected</span></strong><span> samples in remain dataset will be too less for model to learn.</span>
+<span>Therefore, I keep all the infected sample.</span>
+<span>The label distribtion of dataset before and after dropping is</span></p><table>
+<thead>
+<tr>
+<th><span>Status</span></th>
+<th><span>Non-Infected</span></th>
+<th><span>Infected</span></th>
+<th><span>Total Sample</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span>Before dropping</span></strong></td>
+<td><span>51280</span></td>
+<td><span>879</span></td>
+<td><span>52159</span></td>
+</tr>
+<tr>
+<td><strong><span>After dropping</span></strong></td>
+<td><span>27076</span></td>
+<td><span>879</span></td>
+<td><span>27955</span></td>
+</tr>
+</tbody>
+</table><h3 id="Dataset-Split" data-id="Dataset-Split"><a class="anchor hidden-xs" href="#Dataset-Split" title="Dataset-Split"><span class="octicon octicon-link"></span></a><span>Dataset Split</span></h3><p><span>Split the dataset into train and test exclusive set with ratio </span><strong><span>8:2</span></strong><span>. After the model is trained by train dataset, validate the model with validation set to estimate the model performance.</span></p><table>
+<thead>
+<tr>
+<th><span>Dataset</span></th>
+<th><span>Non-Infected</span></th>
+<th><span>Infected</span></th>
+<th><span>Infected(%)</span></th>
+<th><span>Total Sample</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span>All</span></strong></td>
+<td><span>27076</span></td>
+<td><span>879</span></td>
+<td><span>3.144%</span></td>
+<td><span>27955</span></td>
+</tr>
+<tr>
+<td><strong><span>Train</span></strong></td>
+<td><span>21646</span></td>
+<td><span>718</span></td>
+<td><span>3.211%</span></td>
+<td><span>22364</span></td>
+</tr>
+<tr>
+<td><strong><span>Test</span></strong></td>
+<td><span>5430</span></td>
+<td><span>161</span></td>
+<td><span>2.87%</span></td>
+<td><span>5591</span></td>
+</tr>
+</tbody>
+</table><h3 id="Undersampling" data-id="Undersampling"><a class="anchor hidden-xs" href="#Undersampling" title="Undersampling"><span class="octicon octicon-link"></span></a><span>Undersampling</span></h3><p><span>Since the dataset is extremely imbalance, the model wopuld tend to focus on the majority class without undersampling or oversampling. I’ve tried both undersampling and oversampling, and undersampling is much better. Therefore, I undersample the train dataset with ratio 0.1 and validation dataset remain the same.</span>
+<span>The distribution of train dataset will be:</span></p><table>
+<thead>
+<tr>
+<th><span>Dataset</span></th>
+<th><span>Infected</span></th>
+<th><span>Infected(%)</span></th>
+<th><span>Non-Infected</span></th>
+<th><span>Total Sample</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span>Train</span></strong></td>
+<td><span>718</span></td>
+<td><span>9.09%</span></td>
+<td><span>7180</span></td>
+<td><span>7898</span></td>
+</tr>
+</tbody>
+</table><blockquote>
+<p><span>Notice that in both ANN and CNN model, I </span><strong><span>did not</span></strong><span> do any sampling method but use the </span><strong><span>sampler</span></strong><span> in pytorch. It can reach the same effect.</span></p>
+</blockquote><h3 id="Feature-Selection" data-id="Feature-Selection"><a class="anchor hidden-xs" href="#Feature-Selection" title="Feature-Selection"><span class="octicon octicon-link"></span></a><span>Feature Selection</span></h3><p><span>In original dataset, there are total 66 features but not each of them is important. Therefore, I remove the feature whose variance is lower than 0.2, which is 36 features in total. The feature count before and after feature selection is:</span></p><table>
+<thead>
+<tr>
+<th><span>Status</span></th>
+<th><span>Feature count</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span>Before selection</span></strong></td>
+<td><span>66</span></td>
+</tr>
+<tr>
+<td><strong><span>After selection</span></strong></td>
+<td><span>30</span></td>
+</tr>
+</tbody>
+</table><blockquote>
+<p><span>Notice that in both ANN and CNN, I </span><strong><span>did not</span></strong><span> do any feature selection, because it is hard to decide whether the feature is important to neural network or not.</span></p>
+</blockquote><h3 id="Missing-Value-Imputation" data-id="Missing-Value-Imputation"><a class="anchor hidden-xs" href="#Missing-Value-Imputation" title="Missing-Value-Imputation"><span class="octicon octicon-link"></span></a><span>Missing Value Imputation</span></h3><p><span>Some models can not handle the missing values in dataset. It is necessary for me to deal with the missing value first.</span></p><h4 id="Numeric-feature" data-id="Numeric-feature"><a class="anchor hidden-xs" href="#Numeric-feature" title="Numeric-feature"><span class="octicon octicon-link"></span></a><span>Numeric feature</span></h4><p><span>For numeric missing value, I used </span><strong><span>IterativeImputer</span></strong><span> to deal with it. It will consider the samples’ others feature to fill in the missing one. It is the way better than imputing the missing value simply by median and mean or the feature.</span></p><h4 id="Categoric-feature" data-id="Categoric-feature"><a class="anchor hidden-xs" href="#Categoric-feature" title="Categoric-feature"><span class="octicon octicon-link"></span></a><span>Categoric feature</span></h4><p><span>For cateforic missing value, I used </span><strong><span>SimpleImputer</span></strong><span> to deal with it. Although it will be better to consider other features in the sample, I think filled it with an additional class in enough. For all categoric missing values, I imputed them with </span><strong><span>10.0</span></strong><span>.</span></p><h3 id="Scaler" data-id="Scaler"><a class="anchor hidden-xs" href="#Scaler" title="Scaler"><span class="octicon octicon-link"></span></a><span>Scaler</span></h3><p><span>It is necessaty to scale numeric features to prevent the large number features dominant the prediction in specific models.</span></p><h4 id="For-SVM-amp-LR-amp-CNN-amp-ANN" data-id="For-SVM-amp-LR-amp-CNN-amp-ANN"><a class="anchor hidden-xs" href="#For-SVM-amp-LR-amp-CNN-amp-ANN" title="For-SVM-amp-LR-amp-CNN-amp-ANN"><span class="octicon octicon-link"></span></a><span>For SVM &amp; LR &amp; CNN &amp; ANN</span></h4><p><span>For these three model, large number feature will dominant the model. Therefore, I used </span><strong><span>stardard scaler</span></strong><span> to scale the numeric features.</span></p><h4 id="For-DT-amp-RF" data-id="For-DT-amp-RF"><a class="anchor hidden-xs" href="#For-DT-amp-RF" title="For-DT-amp-RF"><span class="octicon octicon-link"></span></a><span>For DT &amp; RF</span></h4><p><span>For these two model, large number features will not dominant the prediction. I’ve tried to scale numeric features by </span><strong><span>stardard scaler</span></strong><span> in these models and it will not effect the performance very much. Therefore, I didn’t do any scaler for these models.</span></p><h3 id="One-hot-Encoding" data-id="One-hot-Encoding"><a class="anchor hidden-xs" href="#One-hot-Encoding" title="One-hot-Encoding"><span class="octicon octicon-link"></span></a><span>One hot Encoding</span></h3><p><span>For CNN &amp; ANN, it is necessary to one hot encode categoric data because in NN, it is inappropriate to define multiple class in a input neuron.</span></p><h2 id="Model" data-id="Model"><a class="anchor hidden-xs" href="#Model" title="Model"><span class="octicon octicon-link"></span></a><span>Model</span></h2><p><span>I’ve build a few kinds of model include:</span></p><ol>
+<li><span>CNN</span></li>
+<li><span>ANN</span></li>
+<li><span>Logistic Regression(LR)</span></li>
+<li><span>Support Vector Machine(SVM)</span></li>
+<li><span>Decision Tree(DT)</span></li>
+<li><span>Random Forest(RF)</span></li>
+</ol><p><span>Since the target dataset is extremely imbalanced, most of the model’s class weight are tuned as </span><strong><span>{0:0.1,1:1}</span></strong><span>.</span></p><h3 id="CNNConvolutional-Neural-Network" data-id="CNNConvolutional-Neural-Network"><a class="anchor hidden-xs" href="#CNNConvolutional-Neural-Network" title="CNNConvolutional-Neural-Network"><span class="octicon octicon-link"></span></a><span>CNN(Convolutional Neural Network)</span></h3><h4 id="Model-introduction" data-id="Model-introduction"><a class="anchor hidden-xs" href="#Model-introduction" title="Model-introduction"><span class="octicon octicon-link"></span></a><span>Model introduction</span></h4><p><span>The model I built have been seperate into features extraction and classifing part.</span>
+<span>In feature extraction part, there are 2 convolutional layers with kernel size 1 and stride 1 and using Relu as activative function. After each convolutional layer, there is a 1 dimensional maxpooling layer with both kenel size and stride 1.</span>
+<span>In classifing part, there are 4 fully connected layers, and the ratio of each layer’s input and output  dimension is about 4:1. After first 3 fully connected layer, I use Relu as its activative function and Softmax for the last one.</span>
+<span>You can see the image below for more information.</span>
+<img src="https://i.imgur.com/cL4X1wR.png" alt="" loading="lazy"></p><h4 id="Training-hyperparameters" data-id="Training-hyperparameters"><a class="anchor hidden-xs" href="#Training-hyperparameters" title="Training-hyperparameters"><span class="octicon octicon-link"></span></a><span>Training hyperparameters</span></h4><p><span>Others hyperparameters used for training is defined below based on my personal experience and the experiment result:</span></p><table>
+<thead>
+<tr>
+<th><span>Hyperparameter</span></th>
+<th><span>value</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>Error function</span></td>
+<td><span>CrossEntropy</span></td>
+</tr>
+<tr>
+<td><span>Optimizer</span></td>
+<td><span>Adam</span></td>
+</tr>
+<tr>
+<td><span>learning rate</span></td>
+<td><span>0.001</span></td>
+</tr>
+<tr>
+<td><span>batch size</span></td>
+<td><span>100</span></td>
+</tr>
+<tr>
+<td><span>epochs</span></td>
+<td><span>50</span></td>
+</tr>
+</tbody>
+</table><h4 id="Training-process" data-id="Training-process"><a class="anchor hidden-xs" href="#Training-process" title="Training-process"><span class="octicon octicon-link"></span></a><span>Training process</span></h4><p><span>The training process is shown bwlow:</span>
+<img src="https://i.imgur.com/13thrcN.png" alt="" loading="lazy"></p><h3 id="ANNArtifical-Neural-Network" data-id="ANNArtifical-Neural-Network"><a class="anchor hidden-xs" href="#ANNArtifical-Neural-Network" title="ANNArtifical-Neural-Network"><span class="octicon octicon-link"></span></a><span>ANN(Artifical Neural Network)</span></h3><h4 id="Model-introduction1" data-id="Model-introduction"><a class="anchor hidden-xs" href="#Model-introduction1" title="Model-introduction1"><span class="octicon octicon-link"></span></a><span>Model introduction</span></h4><p><span>The model I built have 3 fully conneted layers with sigmoid as first two layers’ activative function and softmax as the last ones. In each layer the ratio between input and output dimension is approximately 4:1. You can see the image below for more information.</span>
+<img src="https://i.imgur.com/grurpy3.png" alt="" loading="lazy"></p><h4 id="Training-hyperparameters1" data-id="Training-hyperparameters"><a class="anchor hidden-xs" href="#Training-hyperparameters1" title="Training-hyperparameters1"><span class="octicon octicon-link"></span></a><span>Training hyperparameters</span></h4><p><span>Others hyperparameters used for training is defined below based on my personal experience and the experiment result:</span></p><table>
+<thead>
+<tr>
+<th><span>Hyperparameter</span></th>
+<th><span>value</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>Error function</span></td>
+<td><span>CrossEntropy</span></td>
+</tr>
+<tr>
+<td><span>Optimizer</span></td>
+<td><span>Adam</span></td>
+</tr>
+<tr>
+<td><span>learning rate</span></td>
+<td><span>0.001</span></td>
+</tr>
+<tr>
+<td><span>batch size</span></td>
+<td><span>100</span></td>
+</tr>
+<tr>
+<td><span>epochs</span></td>
+<td><span>50</span></td>
+</tr>
+</tbody>
+</table><h4 id="Training-process1" data-id="Training-process"><a class="anchor hidden-xs" href="#Training-process1" title="Training-process1"><span class="octicon octicon-link"></span></a><span>Training process</span></h4><p><img src="https://i.imgur.com/HSczJwL.png" alt="" loading="lazy"></p><h3 id="Logistic-Regression" data-id="Logistic-Regression"><a class="anchor hidden-xs" href="#Logistic-Regression" title="Logistic-Regression"><span class="octicon octicon-link"></span></a><span>Logistic Regression</span></h3><p><span>The best hyperparameters is searched by </span><strong><span>Grid Search</span></strong><span> method and scoring by </span><strong><span>f1_score</span></strong><span>.</span></p><p><span>Hyperparameter candidate:</span></p><table>
+<thead>
+<tr>
+<th></th>
+<th><span>Option 1</span></th>
+<th><span>Option 2</span></th>
+<th><span>Option 3</span></th>
+<th><span>Option 4</span></th>
+<th><span>Option 5</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span>C</span></strong></td>
+<td><span>0.1</span></td>
+<td><span>1</span></td>
+<td><span>10</span></td>
+<td><span>100</span></td>
+<td><span>-</span></td>
+</tr>
+<tr>
+<td><strong><span>penalty</span></strong></td>
+<td><span>l1</span></td>
+<td><span>l2</span></td>
+<td><span>elasticnet</span></td>
+<td><span>none</span></td>
+<td><span>-</span></td>
+</tr>
+<tr>
+<td><strong><span>solver</span></strong></td>
+<td><span>newton-cg</span></td>
+<td><span>lbfgs</span></td>
+<td><span>liblinear</span></td>
+<td><span>sag</span></td>
+<td><span>saga</span></td>
+</tr>
+</tbody>
+</table><p><span>The best hyperparameters is: </span><strong><span>{‘C’: 1, ‘penalty’: ‘l1’, ‘solver’: ‘saga’}</span></strong></p><h3 id="Support-Vector-Machine" data-id="Support-Vector-Machine"><a class="anchor hidden-xs" href="#Support-Vector-Machine" title="Support-Vector-Machine"><span class="octicon octicon-link"></span></a><span>Support Vector Machine</span></h3><p><span>The best hyperparameters is searched by </span><strong><span>Grid Search</span></strong><span> method and scoring by </span><strong><span>f1_score</span></strong><span>.</span></p><p><span>Hyperparameter candidate:</span></p><table>
+<thead>
+<tr>
+<th></th>
+<th><span>Option 1</span></th>
+<th><span>Option 2</span></th>
+<th><span>Option 3</span></th>
+<th><span>Option 4</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span>kernel</span></strong></td>
+<td><span>linear</span></td>
+<td><span>poly</span></td>
+<td><span>rbf</span></td>
+<td><span>sigmoid</span></td>
+</tr>
+<tr>
+<td><strong><span>degree</span></strong></td>
+<td><span>1</span></td>
+<td><span>2</span></td>
+<td><span>3</span></td>
+<td><span>4</span></td>
+</tr>
+<tr>
+<td><strong><span>C</span></strong></td>
+<td><span>0.1</span></td>
+<td><span>1</span></td>
+<td><span>10</span></td>
+<td><span>100</span></td>
+</tr>
+<tr>
+<td><strong><span>gamma</span></strong></td>
+<td><span>scale</span></td>
+<td><span>auto</span></td>
+<td><span>-</span></td>
+<td><span>-</span></td>
+</tr>
+</tbody>
+</table><blockquote>
+<p><span>The option of </span><strong><span>gamma</span></strong><span> is provided by scikit-learn, where ‘scale’ is </span><span class="mathjax raw">\(\frac{1}{n\_features*X.var()}\)</span><span> and ‘auto’ is </span><span class="mathjax raw">\(\frac{1}{n\_features}\)</span><span>.</span></p>
+</blockquote><p><span>The best hyperparameters is : </span><strong><span>{‘kernel’: ‘rbf’, ‘degree’: 1, ‘C’: 100, ‘gamma’: ‘auto’, }</span></strong></p><h3 id="Random-Forest" data-id="Random-Forest"><a class="anchor hidden-xs" href="#Random-Forest" title="Random-Forest"><span class="octicon octicon-link"></span></a><span>Random Forest</span></h3><p><span>The best hyperparameter is searched by </span><strong><span>Grid Search</span></strong><span> method and scoring by </span><strong><span>f1_score</span></strong><span>.</span></p><table>
+<thead>
+<tr>
+<th></th>
+<th><span>Option 1</span></th>
+<th><span>Option 2</span></th>
+<th><span>Option 3</span></th>
+<th><span>Option 4</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span>n_estimators</span></strong></td>
+<td><span>10</span></td>
+<td><span>100</span></td>
+<td><span>200</span></td>
+<td><span>500</span></td>
+</tr>
+<tr>
+<td><strong><span>criterion</span></strong></td>
+<td><span>gini</span></td>
+<td><span>entropy</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong><span>bootstrap</span></strong></td>
+<td><span>True</span></td>
+<td><span>False</span></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table><p><span>The best hyperparameters is : </span><strong><span>{‘bootstrap’: False, ‘criterion’: ‘gini’, ‘n_estimators’: 500}</span></strong></p><h3 id="Decision-Tree" data-id="Decision-Tree"><a class="anchor hidden-xs" href="#Decision-Tree" title="Decision-Tree"><span class="octicon octicon-link"></span></a><span>Decision Tree</span></h3><h4 id="Decide-basic-hyperparameters" data-id="Decide-basic-hyperparameters"><a class="anchor hidden-xs" href="#Decide-basic-hyperparameters" title="Decide-basic-hyperparameters"><span class="octicon octicon-link"></span></a><span>Decide basic hyperparameters</span></h4><p><span>The best hyperparameters is searched by </span><strong><span>Grid Search</span></strong><span> method and scoring by </span><strong><span>f1_score</span></strong><span>. Also, the </span><strong><span>ccp_alpha</span></strong><span> used for pruning is selected artificially based on </span><strong><span>f1_score</span></strong><span> after selecting the best hyperparameters.</span></p><table>
+<thead>
+<tr>
+<th></th>
+<th><span>Option 1</span></th>
+<th><span>Option 2</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span>criterion</span></strong></td>
+<td><span>gini</span></td>
+<td><span>entropy</span></td>
+</tr>
+<tr>
+<td><strong><span>splitter</span></strong></td>
+<td><span>best</span></td>
+<td><span>random</span></td>
+</tr>
+</tbody>
+</table><p><span>The best hyperparameters is : </span><strong><span>{‘criterion’: ‘entropy’, ‘splitter’: ‘best’}.</span></strong></p><h4 id="Decide-pruning-factor" data-id="Decide-pruning-factor"><a class="anchor hidden-xs" href="#Decide-pruning-factor" title="Decide-pruning-factor"><span class="octicon octicon-link"></span></a><span>Decide pruning factor</span></h4><p><span>After choosing the </span><strong><span>criterion</span></strong><span> and </span><strong><span>splitter</span></strong><span>, I tried to use different </span><strong><span>ccp_alpha</span></strong><span> for pruning and see the relationship between </span><strong><span>ccp_alpha</span></strong><span> and the architecture of tree. You can see the chart below for more information.</span>
+<img src="https://i.imgur.com/NPeUX29.png" alt="" loading="lazy">
+<img src="https://i.imgur.com/OJVW0LG.png" alt="" loading="lazy">
+<span>Finally, I choose the </span><strong><span>ccp_alpha</span></strong><span> that has the maximum </span><strong><span>f1_score</span></strong><span> on test dataset.</span>
+<img src="https://i.imgur.com/NZ1G90L.png" alt="" loading="lazy">
+<span>The final best hperparameters is : </span><strong><span>{‘criterion’: ‘entropy’, ‘splitter’: ‘best’,‘ccp_alpha’: 0.01705631952704778}.</span></strong></p><h4 id="Tree-architecture" data-id="Tree-architecture"><a class="anchor hidden-xs" href="#Tree-architecture" title="Tree-architecture"><span class="octicon octicon-link"></span></a><span>Tree architecture</span></h4><p><img src="https://i.imgur.com/VqEoKMe.png" alt="" loading="lazy"></p><blockquote>
+<p><span>Notice that the value of the tree is weighted as {0:0.1,1:1}. Therefore, it doesn’t represent the number of sample in each node.</span></p>
+</blockquote><h2 id="Results" data-id="Results"><a class="anchor hidden-xs" href="#Results" title="Results"><span class="octicon octicon-link"></span></a><span>Results</span></h2><p><span>Since the label in the original dataset is extremely imbalanced, accuracy in this case would not be a good way to estimate the model. Therefore, I used the addtional criteria below to compare the performance of each model.</span></p><table>
+<thead>
+<tr>
+<th><span>Performance Metric</span></th>
+<th><span>Definition</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>Percentage Accuracy(ACC)</span></td>
+<td><span>(TP + TN) / (TP + TN + FP + FN)</span></td>
+</tr>
+<tr>
+<td><span>Recall</span></td>
+<td><span>TP / (TP + FN)</span></td>
+</tr>
+<tr>
+<td><span>Precision</span></td>
+<td><span>TP / (TP + FP)</span></td>
+</tr>
+<tr>
+<td><span>F1-score</span></td>
+<td><span class="mathjax raw">\(\frac{2\times Recall\times Precision}{Recall+Precision}\)</span></td>
+</tr>
+<tr>
+<td><span>Matthews Correlation Coefficient (MCC)</span></td>
+<td><span class="mathjax raw">\(\frac{TP\times TN - FP \times FN}{\sqrt{(TP+FP)\times(TP+FN)\times(TN+FP)\times(TN+FN)}}\)</span></td>
+</tr>
+</tbody>
+</table><p><span>The performance below is test on the test dataset which is exclusive from train dataset.</span></p><table>
+<thead>
+<tr>
+<th><span>Model</span></th>
+<th><span>Confusion matrix</span></th>
+<th><span>ACC</span></th>
+<th><span>Recall</span></th>
+<th><span>Precision</span></th>
+<th><span>F1-score</span></th>
+<th><span>MCC</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>CNN</span></td>
+<td><span>[5368, 62]</span><br><span>[54, 107]</span></td>
+<td><span>0.9792</span></td>
+<td><span>0.6645</span></td>
+<td><span>0.6331</span></td>
+<td><span>0.6484</span></td>
+<td><span>0.6380</span></td>
+</tr>
+<tr>
+<td><span>ANN</span></td>
+<td><span>[5113, 317]</span><br><span>[47, 114]</span></td>
+<td><span>0.9348</span></td>
+<td><span>0.7080</span></td>
+<td><span>0.2645</span></td>
+<td><span>0.3851</span></td>
+<td><span>0.4073</span></td>
+</tr>
+<tr>
+<td><span>LR</span></td>
+<td><span>[3669, 1761]</span><br><span> [61, 100]</span></td>
+<td><span>0.6741</span></td>
+<td><span>0.6211</span></td>
+<td><span>0.0537</span></td>
+<td><span>0.0989</span></td>
+<td><span>0.1053</span></td>
+</tr>
+<tr>
+<td><span>SVM</span></td>
+<td><span>[4969, 461]</span><br><span> [48, 113]</span></td>
+<td><span>0.9089</span></td>
+<td><span>0.7018</span></td>
+<td><span>0.1968</span></td>
+<td><span>0.3074</span></td>
+<td><span>0.3399</span></td>
+</tr>
+<tr>
+<td><span>DT</span></td>
+<td><span>[5350, 80]</span><br><span>  [61, 100]</span></td>
+<td><span>0.9747</span></td>
+<td><span>0.6211</span></td>
+<td><span>0.5555</span></td>
+<td><span>0.5865</span></td>
+<td><span>0.5744</span></td>
+</tr>
+<tr>
+<td><span>RF</span></td>
+<td><span>[5419, 11]</span><br><span>  [59, 102]</span></td>
+<td><span>0.9874</span></td>
+<td><span>0.6335</span></td>
+<td><span>0.9026</span></td>
+<td><span>0.7445</span></td>
+<td><span>0.7504</span></td>
+</tr>
+</tbody>
+</table><h2 id="Conclusion" data-id="Conclusion"><a class="anchor hidden-xs" href="#Conclusion" title="Conclusion"><span class="octicon octicon-link"></span></a><span>Conclusion</span></h2><p><span>As you can see the above, most of the model can identify the infected well with each Recall score higher than 0.6, which is impressive in such a imbalanced dataset. The most obvious different between models is Precision score that range from 0.05 to 0.90. It means that although some models can identify the infected well, many non-infected will be diagnosis as infected, which will cost many medical resource in practice.</span>
+<span>To my surprise, RF is the best model with the highest ACC, Precision, F1-score and MCC. It shows that although many innovative machine learning algorithm like ANN and CNN is designed these years, the classic one can still not be ignored.</span></p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li><a href="#Periprosthetic-joint-infection-diagnosis-by-multiple-machine-learning-model" title="Periprosthetic joint infection diagnosis by multiple machine learning model">Periprosthetic joint infection diagnosis by multiple machine learning model</a><ul class="nav">
+<li><a href="#Introduction" title="Introduction">Introduction</a></li>
+<li><a href="#Data-Collection" title="Data Collection">Data Collection</a><ul class="nav">
+<li><a href="#Dataset" title="Dataset">Dataset</a></li>
+</ul>
+</li>
+<li><a href="#Objective" title="Objective">Objective</a></li>
+<li><a href="#Preprocessing" title="Preprocessing">Preprocessing</a><ul class="nav">
+<li><a href="#Remove-low-quality-samples" title="Remove low quality samples">Remove low quality samples</a></li>
+<li><a href="#Dataset-Split" title="Dataset Split">Dataset Split</a></li>
+<li><a href="#Undersampling" title="Undersampling">Undersampling</a></li>
+<li><a href="#Feature-Selection" title="Feature Selection">Feature Selection</a></li>
+<li><a href="#Missing-Value-Imputation" title="Missing Value Imputation">Missing Value Imputation</a></li>
+<li><a href="#Scaler" title="Scaler">Scaler</a></li>
+<li><a href="#One-hot-Encoding" title="One hot Encoding">One hot Encoding</a></li>
+</ul>
+</li>
+<li><a href="#Model" title="Model">Model</a><ul class="nav">
+<li><a href="#CNNConvolutional-Neural-Network" title="CNN(Convolutional Neural Network)">CNN(Convolutional Neural Network)</a></li>
+<li><a href="#ANNArtifical-Neural-Network" title="ANN(Artifical Neural Network)">ANN(Artifical Neural Network)</a></li>
+<li><a href="#Logistic-Regression" title="Logistic Regression">Logistic Regression</a></li>
+<li><a href="#Support-Vector-Machine" title="Support Vector Machine">Support Vector Machine</a></li>
+<li><a href="#Random-Forest" title="Random Forest">Random Forest</a></li>
+<li><a href="#Decision-Tree" title="Decision Tree">Decision Tree</a></li>
+</ul>
+</li>
+<li><a href="#Results" title="Results">Results</a></li>
+<li><a href="#Conclusion" title="Conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">全部展開</a><a class="back-to-top" href="#">回到頂部</a><a class="go-to-bottom" href="#">移至底部</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li><a href="#Periprosthetic-joint-infection-diagnosis-by-multiple-machine-learning-model" title="Periprosthetic joint infection diagnosis by multiple machine learning model">Periprosthetic joint infection diagnosis by multiple machine learning model</a><ul class="nav">
+<li><a href="#Introduction" title="Introduction">Introduction</a></li>
+<li><a href="#Data-Collection" title="Data Collection">Data Collection</a><ul class="nav">
+<li><a href="#Dataset" title="Dataset">Dataset</a></li>
+</ul>
+</li>
+<li><a href="#Objective" title="Objective">Objective</a></li>
+<li><a href="#Preprocessing" title="Preprocessing">Preprocessing</a><ul class="nav">
+<li><a href="#Remove-low-quality-samples" title="Remove low quality samples">Remove low quality samples</a></li>
+<li><a href="#Dataset-Split" title="Dataset Split">Dataset Split</a></li>
+<li><a href="#Undersampling" title="Undersampling">Undersampling</a></li>
+<li><a href="#Feature-Selection" title="Feature Selection">Feature Selection</a></li>
+<li><a href="#Missing-Value-Imputation" title="Missing Value Imputation">Missing Value Imputation</a></li>
+<li><a href="#Scaler" title="Scaler">Scaler</a></li>
+<li><a href="#One-hot-Encoding" title="One hot Encoding">One hot Encoding</a></li>
+</ul>
+</li>
+<li><a href="#Model" title="Model">Model</a><ul class="nav">
+<li><a href="#CNNConvolutional-Neural-Network" title="CNN(Convolutional Neural Network)">CNN(Convolutional Neural Network)</a></li>
+<li><a href="#ANNArtifical-Neural-Network" title="ANN(Artifical Neural Network)">ANN(Artifical Neural Network)</a></li>
+<li><a href="#Logistic-Regression" title="Logistic Regression">Logistic Regression</a></li>
+<li><a href="#Support-Vector-Machine" title="Support Vector Machine">Support Vector Machine</a></li>
+<li><a href="#Random-Forest" title="Random Forest">Random Forest</a></li>
+<li><a href="#Decision-Tree" title="Decision Tree">Decision Tree</a></li>
+</ul>
+</li>
+<li><a href="#Results" title="Results">Results</a></li>
+<li><a href="#Conclusion" title="Conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">全部展開</a><a class="back-to-top" href="#">回到頂部</a><a class="go-to-bottom" href="#">移至底部</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
