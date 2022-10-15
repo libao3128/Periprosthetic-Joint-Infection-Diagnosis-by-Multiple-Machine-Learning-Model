@@ -1,4 +1,4 @@
-# Periprosthetic joint infection diagnosis by multiple machine learning model.
+# Periprosthetic Joint Infection Diagnosis by Multiple Machine Learning Model.
 
 ## Introduction
 Total knee/hip joint replacement (total knee/hip arthroplasty) is performed to restore function and relieve pain in patients with severely damaged knees. The surgery involves replacement of both the medial and lateral femorotibial joints and the patellofemoral joint. Although total joint replacement is an effective treatment, postoperative complications include blood clots, infection, and loosening or malalignment of the prosthetic component. Periprosthetic joint infection (PJI) is a serious complication occurring in 1% to 2% of primary arthroplasties, which is associated with high morbidity and need for complex interdisciplinary treatment strategies.
