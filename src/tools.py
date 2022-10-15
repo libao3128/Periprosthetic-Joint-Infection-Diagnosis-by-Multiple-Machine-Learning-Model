@@ -37,7 +37,7 @@ def get_performance(true,result):
 
     #print("precision:")
     #print(precision_score(true,result))
-    performance["precision"] = precision_score(true,result)
+    performance["precision"] = precision_score(true,result,zero_division=0)
 
     #print("f1_score:")
     #print(f1_score(true,result))
@@ -45,11 +45,10 @@ def get_performance(true,result):
 
     #print("recall:")
     #print(recall_score(true,result))
-    performance["recall"] = recall_score(true,result)
-
-    ACC = (matrix[0][0]+matrix[1][1])/(matrix[0][0]+matrix[0][1]+matrix[1][0]+matrix[0][1])
-    #print("Percentage Accuracy (ACC):",ACC)
-    performance['ACC'] = ACC
+    performance["recall"] = recall_score(true,result,zero_division=0)
+    
+    performance["matthews_corrcoef"] = matthews_corrcoef(true,result)
+   
 
     return performance
     
@@ -146,3 +145,10 @@ def wrapper_approach(clf,train_X,train_y,val_X = pd.DataFrame(),val_y=pd.DataFra
         #print("\n\n")
 
     return record
+
+def set_pandas_display_options() -> None:
+    display = pd.options.display
+    display.max_columns = 100
+    display.max_rows = 100
+    display.max_colwidth = 199
+    display.width = None
